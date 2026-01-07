@@ -3,3 +3,4 @@ __pycache__/
 .venv/
 result
 repo_contents.txt
+imported/
