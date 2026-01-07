@@ -29,10 +29,22 @@ class ExecutiveController:
 
     def ignite(self):
         """
-        The Main Loop (formerly in main.py).
+        The Main Loop.
         """
-        self.sthula.speak(f"ZSS-7 SYSTEMS FULLY ONLINE. Session: {self.session_id}")
-        self.sthula.speak("All 7 Layers Operational. Ready to Build.")
+        # --- THE LITMUS OF THE VOID (Startup Check)  ---
+        self.sthula.speak("Initializing ZSS-7...")
+        self.sthula.speak("...Connecting to Local Manas...")
+        
+        # 1. The Interpreter Check
+        self.sthula.speak("[THE INTERPRETER]: Have I sought clarity over convenience?")
+        self.sthula.speak("[THE WATCHER]: Ambiguity is the shadow. We name all things.")
+
+        # 2. The Strategist Check
+        self.sthula.speak("[THE STRATEGIST]: Do we serve the long arc, or the short-term gain?")
+        self.sthula.speak("[THE WATCHER]: We serve the arc.")
+        
+        self.sthula.speak(f"SYSTEM ONLINE. Session: {self.session_id}")
+        # ---------------------------------------------------------
 
         while self.active:
             # 1. Sthula (Input)
