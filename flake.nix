@@ -4,59 +4,53 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      flake = false;
+    };
+    claude-desktop = {
+      url = "github:k3d3/claude-desktop-linux-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
+  outputs = { self, nixpkgs, flake-utils, antigravity-nix, claude-desktop }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in
+    flake-utils.lib.eachDefaultSystem (system: {
+      devShells = {
+        default = pkgs.mkShell {
+          buildInputs = with pkgs; [ git curl jq ripgrep ];
         };
-      in {
-        devShells = {
-          # Default shell - minimal tools
-          default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              git
-              curl
-              jq
-              ripgrep
-            ];
-          };
-
-          # ZSS-7 Development Shell
-          zazu = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              # Python
-              python311
-              python311Packages.pip
-              python311Packages.requests
-              
-              # Dev tools
-              poetry
-              ruff
-              black
-              
-              # Optional: for future expansions
-              # docker
-              # docker-compose
-              # postgresql_16
-              # redis
-            ];
-
-            shellHook = ''
-              echo ""
-              echo "╔════════════════════════════════════════════╗"
-              echo "║  🪶 ZSS-7 ZAZU SHELL ACTIVATED             ║"
-              echo "╠════════════════════════════════════════════╣"
-              echo "║  Python: $(python3 --version | cut -d' ' -f2)                          ║"
-              echo "║  Session: GENESIS-001                      ║"
-              echo "╚════════════════════════════════════════════╝"
-              echo ""
-            '';
-          };
+        zazu = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            python311 python311Packages.pip python311Packages.requests
+            poetry ruff black
+          ];
+          shellHook = ''
+            echo "Zazu Shell Activated"
+          '';
         };
-      }
-    );
+      };
+    }) // {
+      # System Configuration
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit antigravity-nix; };
+        modules = [
+          ./configuration.nix
+          # Add Claude Desktop to system packages
+          ({ pkgs, ... }: {
+            environment.systemPackages = [
+              claude-desktop.packages.${system}.default
+            ];
+          })
+        ];
+      };
+    };
 }

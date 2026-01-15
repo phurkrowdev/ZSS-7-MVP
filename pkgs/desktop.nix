@@ -26,4 +26,12 @@ with pkgs;
   xclip
   wl-clipboard
   xdg-utils
+  proton-vpn-cli
+  protonvpn-gui
+  wireguard-tools
+  networkmanager-openvpn
+  telegram-desktop
+  signal-desktop
+  discord
+
 ]

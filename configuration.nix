@@ -1,7 +1,9 @@
+
 {
   config,
   lib,
   pkgs,
+  antigravity-nix,
   ...
 }:
 
@@ -10,15 +12,15 @@
 
   nixpkgs.overlays = [
     (final: prev: {
-      google-antigravity = prev.callPackage (
-        (builtins.fetchTarball {
-          url = "https://github.com/jacopone/antigravity-nix/archive/refs/heads/master.tar.gz";
-        }) + "/package.nix"
-      ) {};
+      google-antigravity = prev.callPackage (antigravity-nix + "/package.nix") {};
     })
   ];
 
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ./modules/services.nix
+    ./modules/networking.nix
+  ];
 
   system.stateVersion = "25.11";
 
@@ -29,50 +31,10 @@
 
   security.rtkit.enable = true;
 
-  services.pipewire = {
-    enable = true;
-
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-
-    pulse.enable = true;
-    jack.enable = true;
-  };
-
-  services.pipewire.wireplumber.enable = true;
-
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
     settings.General.Experimental = true;
-  };
-
-  services.blueman.enable = true;
-
-  services.dbus.enable = true;
-  services.openssh.enable = true;
-  programs.dconf.enable = true;
-
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.enable = true;
-
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];
-
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3;
-    };
-  };
-
-  services.libinput.enable = true;
-
-  services.logind.settings.Login = {
-    IdleAction = "ignore";
-    IdleActionSec = 0;
   };
 
   hardware.graphics = {
@@ -97,26 +59,6 @@
 
   boot.kernel.sysctl."kernel.unprivileged_userns_clone" = 1;
 
-  networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.powersave = false;
-  programs.nm-applet.enable = true;
-
-  # Waydroid networking
-  networking.firewall = {
-    enable = true;
-    trustedInterfaces = [ "waydroid0" ];
-    allowedUDPPorts = [
-      67
-      53
-      5353
-    ];
-    allowedTCPPorts = [
-      67
-      53
-      5353
-    ];
-  };
-
   time.timeZone = "America/Phoenix";
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -125,14 +67,7 @@
     memoryPercent = 50;
   };
 
-  services.ollama.enable = true;
-
   programs.nix-ld.enable = true;
-
-  virtualisation = {
-    docker.enable = true;
-    waydroid.enable = true;
-  };
 
   security.sudo = {
     enable = true;
@@ -151,13 +86,6 @@
     ];
   };
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    extraCompatPackages = with pkgs; [ proton-ge-bin ];
-  };
-
   environment.systemPackages =
     (import ./pkgs/core.nix { inherit pkgs; })
     ++ (import ./pkgs/audio.nix { inherit pkgs; })
@@ -174,11 +102,6 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
   ];
-
-  programs.firefox = {
-    enable = true;
-    nativeMessagingHosts.packages = [ pkgs.firefoxpwa ];
-  };
 
   xdg.mime.defaultApplications = {
     "video/mp4" = "vlc.desktop";

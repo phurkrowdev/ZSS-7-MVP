@@ -10,4 +10,6 @@ with pkgs;
   }))
 
   android-studio
+  obsidian
+  qbittorrent
 ]
