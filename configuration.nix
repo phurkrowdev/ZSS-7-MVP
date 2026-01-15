@@ -20,6 +20,8 @@
     ./hardware-configuration.nix
     ./modules/services.nix
     ./modules/networking.nix
+    ./modules/virtualisation.nix
+    ./modules/desktop.nix
   ];
 
   system.stateVersion = "25.11";
@@ -94,14 +96,6 @@
     ++ (import ./pkgs/media.nix { inherit pkgs; })
     ++ (import ./pkgs/archive.nix { inherit pkgs; })
     ++ (import ./pkgs/extra.nix { inherit pkgs; });
-
-  fonts.packages = with pkgs; [
-    dejavu_fonts
-    noto-fonts
-    inter
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
-  ];
 
   xdg.mime.defaultApplications = {
     "video/mp4" = "vlc.desktop";

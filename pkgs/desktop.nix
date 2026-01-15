@@ -20,7 +20,7 @@ with pkgs;
   }))
 
   flameshot
-  xfce.thunar
+  thunar
   networkmanagerapplet
   blueman
   xclip

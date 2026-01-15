@@ -25,28 +25,6 @@
 
   services.dbus.enable = true;
   services.openssh.enable = true;
-  programs.kdeconnect.enable = true;
-  programs.dconf.enable = true;
-
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.enable = true;
-
-  services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];
-
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3;
-    };
-  };
-
-  services.libinput.enable = true;
-
-  services.logind.settings.Login = {
-    IdleAction = "ignore";
-    IdleActionSec = 0;
-  };
 
   services.ollama.enable = true;
 
@@ -56,11 +34,6 @@
     dataDir = "/home/korvengo/.syncthing";
     configDir = "/home/korvengo/.config/syncthing";
     openDefaultPorts = true;
-  };
-
-  virtualisation = {
-    docker.enable = true;
-    waydroid.enable = true;
   };
 
   programs.steam = {
