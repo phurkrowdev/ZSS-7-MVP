@@ -33,5 +33,4 @@ with pkgs;
   telegram-desktop
   signal-desktop
   discord
-
 ]

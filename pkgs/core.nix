@@ -16,8 +16,10 @@ with pkgs;
   pciutils
   kitty
   neovim
+  zed-editor    # Local LLM support via Ollama
   openssh
   sshfs
   xorg.xrandr
   papirus-icon-theme
+  zenity
 ]

@@ -1,10 +1,5 @@
-
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+# Virtualisation: Docker, Waydroid, etc.
+{ config, lib, pkgs, ... }:
 
 {
   virtualisation = {

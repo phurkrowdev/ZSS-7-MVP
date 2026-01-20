@@ -8,4 +8,5 @@ with pkgs;
   pulseaudio
   pavucontrol
   vlc
+  mousai
 ]
