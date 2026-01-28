@@ -22,4 +22,5 @@ with pkgs;
   xorg.xrandr
   papirus-icon-theme
   zenity
+  android-tools
 ]

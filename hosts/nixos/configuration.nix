@@ -23,12 +23,16 @@
     
     # Networking
     ../../modules/networking/default.nix
+    ../../modules/services/tailscale.nix
     
     # Services
     ../../modules/services/default.nix
     
     # Development tools
     ../../modules/dev/default.nix
+
+    # Jellyfin server
+    ../../modules/services/jellyfin.nix
   ];
 
   # ══════════════════════════════════════════════════════════════════
