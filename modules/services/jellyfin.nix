@@ -5,8 +5,11 @@
 {
   services.jellyfin = {
     enable = true;
-    openFirewall = true; # opens TCP 8096 (HTTP) and 8920 (HTTPS)
+    openFirewall = false; # Don't expose to LAN
   };
+
+  # Allow Jellyfin only over Tailscale
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 8096 ];
 
   # Grant jellyfin user access to media devices for hardware transcoding
   users.users.jellyfin.extraGroups = [ "audio" "video" "render" ];

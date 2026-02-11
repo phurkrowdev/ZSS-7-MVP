@@ -13,4 +13,9 @@
       "video"          # Video device access
     ];
   };
+
+  # Session environment (NixOS-native, no bashrc drift)
+  environment.sessionVariables = {
+    PATH = "$HOME/.local/bin:$PATH";
+  };
 }

@@ -3,6 +3,7 @@
 with pkgs;
 [
   git
+  gh
   curl
   wget
   nix-ld
@@ -11,6 +12,8 @@ with pkgs;
   ripgrep
   fd
   htop
+  direnv
+  nix-direnv
   mesa-demos
   iw
   pciutils
@@ -23,4 +26,7 @@ with pkgs;
   papirus-icon-theme
   zenity
   android-tools
+  wireguard-tools
+  networkmanager
+  networkmanagerapplet
 ]

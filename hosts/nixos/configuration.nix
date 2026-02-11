@@ -21,9 +21,10 @@
     # Desktop environment
     ../../modules/desktop/default.nix
     
-    # Networking
+    # Networking & VPN
     ../../modules/networking/default.nix
     ../../modules/services/tailscale.nix
+    ../../modules/services/mullvad.nix
     
     # Services
     ../../modules/services/default.nix
@@ -33,6 +34,9 @@
 
     # Jellyfin server
     ../../modules/services/jellyfin.nix
+
+    # Remote desktop (Tailscale only)
+    ../../modules/services/xrdp.nix
   ];
 
   # ══════════════════════════════════════════════════════════════════
